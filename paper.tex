@@ -44,7 +44,7 @@ The voltage comparator is utilized in this design to indicate whether the voltag
 The Zener Diode exhibits similar behaviors and properties as the standard PN junction diode. However, Zener diodes are also designed to have a well-defined and sharp reverse breakdown voltage, also referred to as the Zener voltage ($V_z$). When a Zener diode connected across a circuit in reverse bias reaches its Zener voltage, it maintains its Zener voltage and behaves as a closed circuit regardless of current fluctuations and changes in voltage. It is safe to use a Zener Diode in breakdown so long as the power it dissipates is below its maximum power rating \cite{week7}.
 
 \begin{figure}[htbp]
-\centerline{\includegraphics{vi-characteristics.png}}
+\centerline{\includegraphics{./images/vi-characteristics.png}}
 \caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
 \label{fig}
 \end{figure}
@@ -57,7 +57,30 @@ R_S = \frac{R_L(V_{in}-V_Z)}{V_Z}\label{eq_1}
 
 \subsection{Potentiometer}
 
-\section{Prepare Your Paper Before Styling}
+\section{Sensor Test and Data}
+
+This experiment required three different circuits to be assembled and tested shown in figures \ref{circuit1}, \ref{circuit2}, and \ref{circuit3}. For all circuits, the biasing tail current IEE was implemented using the LM334, an IC based current source. The value of Rset was calculated using the data-sheet and is 330Ω. Rc1 and Rc2 in figure 1 are the same as R in figure 2. These resistor values are all 24kΩ. Lastly, VCC and VEE are connected to +5V and -5V.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics{./images/circuit1.png}}
+\caption{Schematic. \cite{week7}}
+
+
+\label{circuit1}
+\end{figure}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics{./images/circuit2.png}}
+\caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
+\label{circuit2}
+\end{figure}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics{./images/circuit3.png}}
+\caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
+\label{circuit3}
+\end{figure}
+
 Before you begin to format your paper, first write and save the content as a 
 separate text file. Complete all content and organizational editing before 
 formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
@@ -204,7 +227,7 @@ copy& More table copy$^{\mathrm{a}}$& &  \\
 \end{table}
 
 \begin{figure}[htbp]
-\centerline{\includegraphics{fig1.png}}
+\centerline{\includegraphics{images/fig1.png}}
 \caption{Example of a figure caption.}
 \label{fig}
 \end{figure}
@@ -248,7 +271,7 @@ For papers published in translation journals, please give the English
 citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
-\bibitem{week6} Week 6: Elementary Logic Circuits – Part II, Available https://canvas.calpoly.edu/courses/113173/files?preview=11616452
+\bibitem{week6} Week 6: Elementary Logic Circuits - Part II, Available https://canvas.calpoly.edu/courses/113173/files?preview=11616452
 \bibitem{week7} Week 7: A Low-Supply Voltage Sensor with an Optical Indicator, Available https://canvas.calpoly.edu/courses/113173/files?preview=11699080
 \bibitem{b2} M. Shell, ``How to Use the IEEEtran \LaTeX Class,`` IEEE Transactions on Professional Communication, vol. PP, no. 99, pp. 1-1, 20XX. [Online]. Available: http://www.michaelshell.org/
 \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
