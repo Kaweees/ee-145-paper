@@ -23,7 +23,7 @@ miguel.villafloran@gmail.com}
 \maketitle
 
 \begin{abstract}
-This experiment focuses on the design, construction, and analysis of a low-supply voltage sensor-indicator circuit employing a Zener diode based voltage limiter and LED indicator. Key components include a 4.3V Zener diode, TLC3702 voltage comparator IC, and a multi-turn potentiometer. The circuit utilizes a linear voltage divider and Zener diode to monitor supply voltage, activating an LED when the voltage drops below a specified threshold. The experiment providing valuable insights into the functionality and performance of the designed circuit
+This experiment focuses on the design, construction, and analysis of a low-supply voltage sensor-indicator circuit employing a Zener diode based voltage limiter and LED indicator. Key components include a 4.3 V Zener diode, TLC3702 voltage comparator IC, and a multi-turn potentiometer. The circuit utilizes a linear voltage divider and Zener diode to monitor supply voltage, activating an LED when the voltage drops below a specified threshold. The experiment providing valuable insights into the functionality and performance of the designed circuit
 
 
 \end{abstract}
@@ -36,48 +36,114 @@ Zener diode, voltage comparator, LED, linear voltage divider, voltage limiter
 
 \subsection{Voltage Comparator}
 
-The voltage comparator is a device that specializes in comparing the voltages of two incoming signals and producing a high or low output voltage to indicate which is larger. If the Inverting input ($V_{in+}$) is greater than the Non-Inverting Inputs ($V_{in-}$), the voltage comparator generate a logical high output voltage ($V_{CC}$). Otherwise, a logical low output voltage ($V_{EE}$) is produced \cite{week6}.
+The voltage comparator is a device that specializes in comparing the voltages of two incoming signals and producing a high or low output voltage to indicate which is larger. If the the voltage across the positive terminal $V_{in+}$ is greater than the voltage across the negative terminal $V_{in-}$, the voltage comparator generate a logical high output voltage $V_{DD}$. Otherwise, a logical low output voltage $V_{SS}$ is produced \cite{week6}.
 
-The voltage comparator is utilized in this design to indicate whether the voltage supply drops below a specified threshold, which for our intents and purposes is 8V.
+The voltage comparator is utilized in this design to indicate whether the voltage supply drops below a specified threshold, which for our intents and purposes is 8 V.
 
 \subsection{Voltage Limiting Zener Diode}
 The Zener Diode exhibits similar behaviors and properties as the standard PN junction diode. However, Zener diodes are also designed to have a well-defined and sharp reverse breakdown voltage, also referred to as the Zener voltage ($V_z$). When a Zener diode connected across a circuit in reverse bias reaches its Zener voltage, it maintains its Zener voltage and behaves as a closed circuit regardless of current fluctuations and changes in voltage. It is safe to use a Zener Diode in breakdown so long as the power it dissipates is below its maximum power rating \cite{week7}.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/vi-characteristics.png}}
-\caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
+\caption{VI Characteristic of the 4.3V Zener Diode. \cite{week7}}
 \label{fig}
 \end{figure}
 
-The reverse breakdown properties of a Zener Diode are leveraged to create voltage limiters for regulating the voltage across sensitive components or provide constant reference voltages \cite{week7}. This is done by connecting a resistor, which limits the current coming into the diode, in series to the Zener Diode, which is connected in parallel to the load. The relationship between the current limiting resistance $R_S$, load resistance $R_L$, input voltage $V_{in}$, and Zener voltage $V_Z$ is described by Equation \eqref{eq_1}.
+The reverse breakdown properties of a Zener Diode are leveraged to create voltage limiters for regulating the voltage across sensitive components or provide constant reference voltages \cite{week7}. This is done by connecting a resistor, which limits the current coming into the diode, in series to the Zener Diode, which is connected in parallel to the load. In this design, the Zener Diode provides a constant voltage across the negative terminal of the comparator \eqref{eq_1}.
 
 \begin{equation}
-R_S = \frac{R_L(V_{in}-V_Z)}{V_Z}\label{eq_1}
+V_- \approx V_Z\label{eq_1}
 \end{equation}
 
-\subsection{Potentiometer}
+
+\subsection{Multi-Turn Potentiometer}
+
+A multi-turn rotary potentiometer is a type of voltage divider whose resistance changes as it is rotated, allowing for variable control of the output voltage in electronic circuits. The 
+
+This adjustable resistance is utilized in this circuit so that the positive terminal's voltage is equivalent to the negative terminal's voltage, which is equivalent to the Zener voltage so that the comparator is tripped at the threshold voltage. The values of the potentiometer can also be found mathematically by using \eqref{eq_3}, but was found experimentally.
+
+\begin{equation}
+V_+ = \frac{R_a}{R_a + R_b} V_{DD}\label{eq_2}
+\end{equation}
+
+\begin{equation}
+V_{DD(trip)} = (1 + \frac{R_b}{R_a})V_{Z}\label{eq_3}
+\end{equation}
+
+\subsection{LED Optical Indicator}
+
+The light-emitting diode (LED) indicator serves as a visual cue, activating when the supply voltage falls below the predetermined threshold. The LED is reverse-biased relative to the output of the comparator and its cathode is connected to the supply voltage to ensure it only lights up when the supply voltage drops below the threshold voltage. When the supply voltage is above the threshold voltage, the comparator outputs the supply voltage, and the LED does not activate as there is no potential difference across it. When the supply voltage is below the threshold voltage, the comparator outputs 0 V, and the LED activates as there is a potential difference across it. To ensure the LED does not burn out, a resistor is added to limit current coming into the LED. This resistance is found by using \eqref{eq_3}, where 
+
+and the rated forward current of the LED and the low current rating of the comparator.
+
+\begin{equation}
+R_{LED} \approx \frac{V_{DD(trip)} - V_{LED}}{I_{LED}}\label{eq_4}
+\end{equation}
 
 \section{Sensor Test and Data}
+
+This experiment required a single circuit to be assembled in three phases to ensure its proper functionality and performance. In the initial phase, the voltage limiter is assembled to validate the biasing and behavior the Zener-based limiter. In the second phase, the Zener diode (D1) is integrated to create the voltage limiter. The Zener diode is connected in reverse bias across the supply voltage, and its breakdown characteristics are leveraged to maintain a stable reference voltage. The LED (LED1) is not yet included in this phase.
+
+. The Zener diode selected for the voltage limiter is a 4.3V Zener diode, providing a stable reference voltage for the circuit. A multi-turn potentiometer is employed to set the desired threshold voltage at which the LED indicator is activated.
+
+\subsection{Circuit Design}
+
+The circuit design involves the integration of the voltage comparator, Zener diode, and potentiometer to create a low-supply voltage sensor with an optical indicator. The primary components include a 4.3V Zener diode (D1), TLC3702 voltage comparator IC (U1), LED indicator (LED1), and a multi-turn potentiometer (R1).
+
+The voltage divider network consists of resistors R2 and R3, setting the threshold voltage at the non-inverting input ($V_{in+}$) of the voltage comparator. The Zener diode (D1) and resistor R4 form a Zener voltage limiter to monitor the supply voltage ($V_{in}$). The LED (LED1) is activated when the voltage falls below the specified threshold.
+
+The potentiometer (R1) is employed to adjust the reference voltage at the inverting input ($V_{in-}$) of the voltage comparator, setting the threshold for activation. This adjustable feature enhances the flexibility of the sensor, allowing users to customize the trigger voltage according to specific requirements.
+
+4.3V Zener diode, TLC3702 voltage comparator IC, and a multi-turn potentiometer
+
+
+the biasing tail current IEE was implemented using
+the LM334, an IC based current source. The value of Rset was
+calculated using the data-sheet and is 330Ω. Rc1 and Rc2 in
+figure 1 are the same as R in figure 2. These resistor values
+are all 24kΩ. Lastly, VCC and VEE are connected to +5V and
+-5V.
+The resistive loaded differential pair has two outputs labeled, out1 and out2. Regarding in1, out2 is the non-inverting
+output of this differential pair. Out1 can also be used as an
+inverting output if needed. For this experiment, all data was
+taken from the non-inverting side out2.
+The actively loaded differential pair has only one output. A
+current mirror helps distribute the current in each transistor.
+Thus, the diode connected transistor in the current mirror will
+have a small collector-emitter resistance so the performance
+of the current mirror can be easily degraded. Similar to the
+resistive loaded differential pair, the right side output is also
+a non-inverting output for the actively loaded differential pair
+
+
+
+. The first phase involved the assembly of the Zener diode based voltage limiter. The second phase involved the assembly of the linear voltage divider. The third phase involved the assembly of the voltage comparator. The circuit was assembled and tested using the following components:
+
+
+and tested at 
+
+igure 3: Schematics illustrating the recommended step-by-step assembly and testing of the low-supply voltage circuit: 
+(a) biasing and verification of the Zener-based limiter; (b) adjustment of the linear voltage divider ensuring near zero 
+voltage difference at the desired trip voltage of 8V; (c) verification that the comparator switches states at 
+approximately 8V;
 
 This experiment required three different circuits to be assembled and tested shown in figures \ref{circuit1}, \ref{circuit2}, and \ref{circuit3}. For all circuits, the biasing tail current IEE was implemented using the LM334, an IC based current source. The value of Rset was calculated using the data-sheet and is 330Ω. Rc1 and Rc2 in figure 1 are the same as R in figure 2. These resistor values are all 24kΩ. Lastly, VCC and VEE are connected to +5V and -5V.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit1.png}}
-\caption{Schematic. \cite{week7}}
-
-
+\caption{Schematic with the Zener-based limiter assembled. \cite{week7}}
 \label{circuit1}
 \end{figure}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit2.png}}
-\caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
+\caption{Schematic assembled to fine-tune the potentiometer's value until the voltage difference at the trip voltage is close to zero. \cite{week7}}
 \label{circuit2}
 \end{figure}
 
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit3.png}}
-\caption{VI Characteristic of the 4.3V Zener Diode. \cite{b2}}
+\caption{Schematic assembled to verifiy that the comparator switches states at the specified trip voltage. \cite{b2}}
 \label{circuit3}
 \end{figure}
 
@@ -242,44 +308,10 @@ with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization
 quantities and units. For example, write ``Temperature (K)'', not 
 ``Temperature/K''.
 
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
-
-\section*{References}
-
-Please number citations consecutively within brackets \cite{b2}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
-
 \begin{thebibliography}{00}
 \bibitem{week6} Week 6: Elementary Logic Circuits - Part II, Available https://canvas.calpoly.edu/courses/113173/files?preview=11616452
 \bibitem{week7} Week 7: A Low-Supply Voltage Sensor with an Optical Indicator, Available https://canvas.calpoly.edu/courses/113173/files?preview=11699080
 \bibitem{b2} M. Shell, ``How to Use the IEEEtran \LaTeX Class,`` IEEE Transactions on Professional Communication, vol. PP, no. 99, pp. 1-1, 20XX. [Online]. Available: http://www.michaelshell.org/
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
 \end{thebibliography}
 \vspace{12pt}
 
