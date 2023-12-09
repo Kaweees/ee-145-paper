@@ -72,9 +72,7 @@ V_{DD(trip)} = (1 + \frac{R_b}{R_a})V_{Z}\label{eq_3}
 
 \subsection{LED Optical Indicator}
 
-The light-emitting diode (LED) indicator serves as a visual cue, activating when the supply voltage falls below the predetermined threshold. The LED is reverse-biased relative to the output of the comparator and its cathode is connected to the supply voltage to ensure it only lights up when the supply voltage drops below the threshold voltage. When the supply voltage is above the threshold voltage, the comparator outputs the supply voltage, and the LED does not activate as there is no potential difference across it. When the supply voltage is below the threshold voltage, the comparator outputs 0 V, and the LED activates as there is a potential difference across it. To ensure the LED does not burn out, a resistor is added to limit current coming into the LED. This resistance is found by using \eqref{eq_3}, where 
-
-and the rated forward current of the LED and the low current rating of the comparator.
+The light-emitting diode (LED) indicator serves as a visual cue, activating when the supply voltage falls below the predetermined threshold. The LED is reverse-biased relative to the output of the comparator and its cathode is connected to the supply voltage to ensure it only lights up when the supply voltage drops below the threshold voltage. When the supply voltage is above the threshold voltage, the comparator outputs the supply voltage, and the LED does not activate as there is no potential difference across it. When the supply voltage is below the threshold voltage, the comparator outputs 0 V, and the LED activates as there is a potential difference across it. To ensure the LED does not burn out, a resistor is added to limit current coming into the LED. This resistance is found by using \eqref{eq_4}, where 
 
 \begin{equation}
 R_{LED} \approx \frac{V_{DD(trip)} - V_{LED}}{I_{LED}}\label{eq_4}
@@ -82,69 +80,38 @@ R_{LED} \approx \frac{V_{DD(trip)} - V_{LED}}{I_{LED}}\label{eq_4}
 
 \section{Sensor Test and Data}
 
-This experiment required a single circuit to be assembled in three phases to ensure its proper functionality and performance. In the initial phase, the voltage limiter is assembled to validate the biasing and behavior the Zener-based limiter. In the second phase, the Zener diode (D1) is integrated to create the voltage limiter. The Zener diode is connected in reverse bias across the supply voltage, and its breakdown characteristics are leveraged to maintain a stable reference voltage. The LED (LED1) is not yet included in this phase.
+This experiment required a single circuit to be assembled and tested in four phases as shown in figures \ref{circuit1}, \ref{circuit2},  \ref{circuit3}, and \ref{circuit4} to ensure its proper functionality and performance. For all circuits, the comparator was implemented using a TLC3702 voltage comparator IC, the optical indicator was implemented using a WP7113ID 617nm Red LED, the voltage limiter was implemented using a 1N5229BTR 4.3 V Zener Diode, and the voltage divider was implemented using a 5.00E-250 multi-turn potentiometer.
 
-. The Zener diode selected for the voltage limiter is a 4.3V Zener diode, providing a stable reference voltage for the circuit. A multi-turn potentiometer is employed to set the desired threshold voltage at which the LED indicator is activated.
-
-\subsection{Circuit Design}
-
-The circuit design involves the integration of the voltage comparator, Zener diode, and potentiometer to create a low-supply voltage sensor with an optical indicator. The primary components include a 4.3V Zener diode (D1), TLC3702 voltage comparator IC (U1), LED indicator (LED1), and a multi-turn potentiometer (R1).
-
-The voltage divider network consists of resistors R2 and R3, setting the threshold voltage at the non-inverting input ($V_{in+}$) of the voltage comparator. The Zener diode (D1) and resistor R4 form a Zener voltage limiter to monitor the supply voltage ($V_{in}$). The LED (LED1) is activated when the voltage falls below the specified threshold.
-
-The potentiometer (R1) is employed to adjust the reference voltage at the inverting input ($V_{in-}$) of the voltage comparator, setting the threshold for activation. This adjustable feature enhances the flexibility of the sensor, allowing users to customize the trigger voltage according to specific requirements.
-
-4.3V Zener diode, TLC3702 voltage comparator IC, and a multi-turn potentiometer
-
-
-the biasing tail current IEE was implemented using
-the LM334, an IC based current source. The value of Rset was
-calculated using the data-sheet and is 330Ω. Rc1 and Rc2 in
-figure 1 are the same as R in figure 2. These resistor values
-are all 24kΩ. Lastly, VCC and VEE are connected to +5V and
--5V.
-The resistive loaded differential pair has two outputs labeled, out1 and out2. Regarding in1, out2 is the non-inverting
-output of this differential pair. Out1 can also be used as an
-inverting output if needed. For this experiment, all data was
-taken from the non-inverting side out2.
-The actively loaded differential pair has only one output. A
-current mirror helps distribute the current in each transistor.
-Thus, the diode connected transistor in the current mirror will
-have a small collector-emitter resistance so the performance
-of the current mirror can be easily degraded. Similar to the
-resistive loaded differential pair, the right side output is also
-a non-inverting output for the actively loaded differential pair
-
-
-
-. The first phase involved the assembly of the Zener diode based voltage limiter. The second phase involved the assembly of the linear voltage divider. The third phase involved the assembly of the voltage comparator. The circuit was assembled and tested using the following components:
-
-
-and tested at 
-
-igure 3: Schematics illustrating the recommended step-by-step assembly and testing of the low-supply voltage circuit: 
-(a) biasing and verification of the Zener-based limiter; (b) adjustment of the linear voltage divider ensuring near zero 
-voltage difference at the desired trip voltage of 8V; (c) verification that the comparator switches states at 
-approximately 8V;
-
-This experiment required three different circuits to be assembled and tested shown in figures \ref{circuit1}, \ref{circuit2}, and \ref{circuit3}. For all circuits, the biasing tail current IEE was implemented using the LM334, an IC based current source. The value of Rset was calculated using the data-sheet and is 330Ω. Rc1 and Rc2 in figure 1 are the same as R in figure 2. These resistor values are all 24kΩ. Lastly, VCC and VEE are connected to +5V and -5V.
+The first phase involved the assembly of the Zener-based voltage limiter, as depicted in figure \ref{circuit1}. The bias direction of the diode was validated and the limiter was verified to produce a constant output equivalent to its Zener voltage.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit1.png}}
-\caption{Schematic with the Zener-based limiter assembled. \cite{week7}}
+\caption{Schematic with the Zener-based limiter assembled and validated during phase 1. \cite{week7}}
 \label{circuit1}
 \end{figure}
 
+The second phase involved the assembly of the linear voltage divider, as depicted in figure \ref{circuit2}. The potentiometer's knob was adjusted until the voltage difference between the positive and negative terminal is close to zero when the supply voltage is equivalent to the threshold voltage.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit2.png}}
-\caption{Schematic assembled to fine-tune the potentiometer's value until the voltage difference at the trip voltage is close to zero. \cite{week7}}
+\caption{Schematic with the linear voltage divider assembled and validated during phase 2. \cite{week7}}
 \label{circuit2}
 \end{figure}
 
+The third phase involved the assembly of the voltage comparator, as depicted in figure \ref{circuit3}. The comparator was verified to switches states at the threshold voltage.
+
 \begin{figure}[htbp]
 \centerline{\includegraphics{./images/circuit3.png}}
-\caption{Schematic assembled to verifiy that the comparator switches states at the specified trip voltage. \cite{b2}}
+\caption{Schematic with the linear voltage divider assembled and validated during phase 3. \cite{week7}}
 \label{circuit3}
+\end{figure}
+
+The fourth phase involved the assembly of the voltage comparator, as depicted in figure \ref{circuit3}. The comparator was verified to switches states at the threshold voltage.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics{./images/circuit4.png}}
+\caption{Schematic with the linear voltage divider assembled and validated during phase 4. \cite{week7}}
+\label{circuit4}
 \end{figure}
 
 Before you begin to format your paper, first write and save the content as a 
@@ -311,7 +278,6 @@ quantities and units. For example, write ``Temperature (K)'', not
 \begin{thebibliography}{00}
 \bibitem{week6} Week 6: Elementary Logic Circuits - Part II, Available https://canvas.calpoly.edu/courses/113173/files?preview=11616452
 \bibitem{week7} Week 7: A Low-Supply Voltage Sensor with an Optical Indicator, Available https://canvas.calpoly.edu/courses/113173/files?preview=11699080
-\bibitem{b2} M. Shell, ``How to Use the IEEEtran \LaTeX Class,`` IEEE Transactions on Professional Communication, vol. PP, no. 99, pp. 1-1, 20XX. [Online]. Available: http://www.michaelshell.org/
 \end{thebibliography}
 \vspace{12pt}
 
